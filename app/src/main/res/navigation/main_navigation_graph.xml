@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph.xml"
+    app:startDestination="@id/fragment_splash">
+
+    <fragment
+        android:id="@+id/fragment_splash"
+        android:name="ru.tales.forfamily.presentation.fragments.FragmentSplash"
+        tools:layout="@layout/fragment_splash"/>
+    <fragment
+        android:id="@+id/fragment_main"
+        android:name="ru.tales.forfamily.presentation.fragments.FragmentMain"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_fragment_main_to_fragment_player"
+            app:destination="@id/fragment_player">
+            <argument
+                android:name="tales"
+                app:argType="ru.tales.forfamily.domain.Tale[]"/>
+            <argument
+                android:name="index"
+                app:argType="integer"/>
+            <argument
+                android:name="stop"
+                app:argType="boolean" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_player"
+        android:name="ru.tales.forfamily.presentation.fragments.FragmentPlayer"
+        tools:layout="@layout/fragment_player">
+        <argument
+            android:name="tales"
+            app:argType="ru.tales.forfamily.domain.Tale[]"/>
+        <argument
+            android:name="index"
+            app:argType="integer"/>
+        <argument
+            android:name="stop"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_pay"
+        android:name="ru.tales.forfamily.presentation.fragments.FragmentPaywall"
+        tools:layout="@layout/fragment_pay">
+        <action
+            android:id="@+id/action_fragment_pay_to_fragment_main"
+            app:destination="@id/fragment_main" />
+    </fragment>
+</navigation>

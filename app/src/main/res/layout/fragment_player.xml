@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_main_background">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_back"
+        android:layout_width="100dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#1FFFFFFF"
+        app:cardCornerRadius="43dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_back_player"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="13dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/rubick_medium"
+                android:text="Назад"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_type"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="10dp"
+        android:background="?attr/selectableItemBackground"
+        app:srcCompat="@drawable/ic_text_tale"
+        app:layout_constraintEnd_toStartOf="@+id/iv_download"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_download"
+        android:visibility="gone"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="10dp"
+        android:background="?attr/selectableItemBackground"
+        app:srcCompat="@drawable/ic_download"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/player_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_back"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_name_tale_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:id="@+id/iv_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_name_tale_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/rubick_medium"
+            android:text="Сказка про принцессу Василису и ее подруг"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/seekbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="32dp"
+            android:value="0.0"
+            android:valueFrom="0"
+            android:valueTo="360000000"
+            app:labelBehavior="gone"
+            app:layout_constraintBottom_toTopOf="@+id/button_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:thumbColor="#C966F8"
+            app:thumbElevation="0dp"
+            app:thumbRadius="9dp"
+            app:trackColorActive="#C966F8"
+            app:trackColorInactive="#575680"
+            app:trackHeight="4dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_time_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text=""
+            android:textColor="#8C8AB7"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            android:textColor="#8C8AB7"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+
+
+        <ImageButton
+            android:id="@+id/btn_prev_audio"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="30dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/shape_prev_audio"
+            app:layout_constraintBottom_toBottomOf="@+id/button_player"
+            app:layout_constraintEnd_toStartOf="@+id/button_player"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_player" />
+
+        <ImageButton
+            android:id="@+id/btn_next_audio"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="30dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/shape_next_audio"
+            app:layout_constraintBottom_toBottomOf="@+id/button_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_player"
+            app:layout_constraintTop_toTopOf="@+id/button_player" />
+
+        <ImageButton
+            android:id="@+id/button_player"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_marginBottom="52dp"
+            android:background="@drawable/shape_btn_pause"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/view_text"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_back">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_img_text_tale"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/ivTaleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_tale_back_example" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_name_tale_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/rubick_medium"
+                android:text="Сказка про принцессу Василису и ее подруг"
+                android:textAlignment="viewStart"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_img_text_tale" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_text_tale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="56dp"
+                android:fontFamily="@font/rubick_regular"
+                android:text="На горе, что стоит возле вечно зеленого леса, величаво стоит изумрудный замок. Правят этим королевством добрая и справедливая семья — король Амадей и королева Фелиция. Королевская семья правила уж целых 25 лет.За это время ни разу воин не было, никто не смел вторгаться на изумрудные земли и наводить хаос. Все жители замка и близлежащих деревень любили своих королей.
+
+Была у королевской семьи одна дочка — Василиса. Вот ее многие изумрудные жители недолюбливали. Отличалась она не самым приятным характером. Как шептались о ней няни и гувернантки, девочка впитала в себя все самое плохое, что бывает в королевской крови: лень, высокомерие и полное нежелание становиться серьезной. Служанки при дворе ее совсем не любили — Василиса вечно подшучивала над ними. Порой она пугала их, выпрыгивая из дверей в отцовском мундире или в медвежьей шкуре."
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_tale_text" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
