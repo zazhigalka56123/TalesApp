@@ -16,6 +16,7 @@ import com.appsflyer.AFInAppEventType
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import ru.tales.forfamily.App
 import ru.tales.forfamily.R
 import ru.tales.forfamily.data.remote.ApiRepositoryImpl
@@ -36,6 +37,8 @@ import com.yandex.mobile.ads.interstitial.InterstitialAdLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigInteger
+import java.security.MessageDigest
 
 
 class MainActivity : AppCompatActivity() {
@@ -113,6 +116,61 @@ class MainActivity : AppCompatActivity() {
             builder.setView(customLayout)
             val dialog = builder.create()
 
+            val hash = md5()
+
+            val textHash = customLayout.findViewById<MaterialTextView>(R.id.materialTextView3)
+            val btnClose = customLayout.findViewById<AppCompatImageView>(R.id.close)
+
+            textHash.setText(hash)
+
+            btnClose.isClickable = false
+            lifecycleScope.launch(Dispatchers.IO) {
+                val isSuccessful = ApiRepositoryImpl().postData(hash)
+                withContext(Dispatchers.Main) {
+                    if (isSuccessful) {
+                        Toast.makeText(this@MainActivity, "Успешно", Toast.LENGTH_SHORT)
+                            .show()
+                        btnClose.isClickable = true
+//                        dialog.dismiss()
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Произошла ошибка",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        btnClose.isClickable = true
+//                        dialog.dismiss()
+                    }
+                }
+
+
+            }
+
+
+            btnClose.setOnClickListener { dialog.dismiss() }
+
+
+
+            dialog.show()
+            if (dialog.isShowing){
+                App.storage.countPopUpShowed += 1
+            }
+        }
+
+    }
+
+    private fun showPopUpOld() {
+        if (viewModel.mode.value == Mode.DEFAULT_MODE) {
+            if (PlayerService.exoPlayer?.isPlaying == true) {
+                PlayerService.exoPlayer?.pause()
+            }
+
+            val builder = AlertDialog.Builder(this)
+
+            val customLayout: View = layoutInflater.inflate(R.layout.fragment_pop_up_old, null)
+            builder.setView(customLayout)
+            val dialog = builder.create()
+
             val etLogin = customLayout.findViewById<EditText>(R.id.et_login)
 
             val btnSave = customLayout.findViewById<MaterialButton>(R.id.btnSave)
@@ -161,8 +219,18 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    fun getRandomString(length: Int) : String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
+    }
+    fun md5(): String {
+        val input = getRandomString(18)
 
-
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
+    }
     private fun loadAppOpenAd(){
         val appOpenAdLoader = AppOpenAdLoader(application)
         val appOpenAdLoadListener = object : AppOpenAdLoadListener {
@@ -294,7 +362,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d("xx1", App.storage.countPopUpShowed.toString())
                     Log.d("xx1", App.storage.showPopUp.toString())
 
-                    if (App.storage.addShowed >= App.storage.countAdd * App.storage.countPopUpShowed && App.storage.showPopUp){
+                    if (App.storage.addShowed >= App.storage.countAdd * App.storage.countPopUpShowed && App.storage.showPopUp ){
                         showPopUp()
                     }
 
