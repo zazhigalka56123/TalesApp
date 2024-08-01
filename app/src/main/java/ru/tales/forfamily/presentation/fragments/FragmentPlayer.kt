@@ -30,6 +30,7 @@ import ru.tales.forfamily.presentation.snackBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.tales.forfamily.App
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -97,10 +98,7 @@ class FragmentPlayer : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        player?.pause()
-        viewModel.onTracksChanged?.invoke()
-        viewModel.onMediaMetadataChanged = null
-        viewModel.onIsPlayingChanged = null
+        exit()
     }
 
     private fun setupPlayer() {
@@ -163,7 +161,9 @@ class FragmentPlayer : Fragment() {
             }
         }
         viewModel.onTracksChanged = {
-            showAdd()
+//            if (App.storage.showPopUp) {
+                showAdd()
+//            }
 
         }
     }
@@ -243,7 +243,10 @@ class FragmentPlayer : Fragment() {
     private fun setupButtons() {
         Glide.with(binding.ivCard).load(viewModel.list.value?.get(taleIndex)?.img).apply(options).into(binding.ivCard)
 
-        binding.cardBack.setOnClickListener { findNavController().navigateUp() }
+        binding.cardBack.setOnClickListener {
+            exit()
+            findNavController().navigateUp()
+        }
         binding.buttonPlayer.setOnClickListener { playPause() }
         binding.btnNextAudio.setOnClickListener { player?.seekToNext() }
         binding.btnPrevAudio.setOnClickListener { player?.seekToPrevious() }
@@ -288,6 +291,19 @@ class FragmentPlayer : Fragment() {
                 )
             }
         }
+    }
+    fun exit(){
+//        val isPlayed: Boolean = player?.isPlaying ?: false
+//        if (isPlayed == false){
+        player?.stop()
+//        }
+        println(">>> player $${player?.isPlaying}")
+        if (App.storage.showPopUp) {
+            player?.pause()
+            viewModel.onTracksChanged?.invoke()
+        }
+        viewModel.onMediaMetadataChanged = null
+        viewModel.onIsPlayingChanged = null
     }
 
     //Seekbar

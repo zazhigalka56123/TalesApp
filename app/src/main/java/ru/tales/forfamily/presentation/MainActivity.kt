@@ -17,10 +17,6 @@ import com.appsflyer.AppsFlyerLib
 import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
-import ru.tales.forfamily.App
-import ru.tales.forfamily.R
-import ru.tales.forfamily.data.remote.ApiRepositoryImpl
-import ru.tales.forfamily.domain.player.PlayerService
 import com.yandex.mobile.ads.appopenad.AppOpenAd
 import com.yandex.mobile.ads.appopenad.AppOpenAdEventListener
 import com.yandex.mobile.ads.appopenad.AppOpenAdLoadListener
@@ -37,6 +33,10 @@ import com.yandex.mobile.ads.interstitial.InterstitialAdLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.tales.forfamily.App
+import ru.tales.forfamily.R
+import ru.tales.forfamily.data.remote.ApiRepositoryImpl
+import ru.tales.forfamily.domain.player.PlayerService
 import java.math.BigInteger
 import java.security.MessageDigest
 
@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val decorView = window.decorView
+        val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+        decorView.systemUiVisibility = uiOptions
         startService(Intent(this, PlayerService::class.java))
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
         viewModel.onUserAlertCallback = {
@@ -263,7 +267,9 @@ class MainActivity : AppCompatActivity() {
     private fun showAppOpenAd(){
          val appOpenAdEventListener = AdEventListener()
         appOpenAd?.setAdEventListener(appOpenAdEventListener)
-        appOpenAd?.show(this@MainActivity)
+        if (App.storage.showPopUp) {
+            appOpenAd?.show(this@MainActivity)
+        }
     }
     private inner class AdEventListener : AppOpenAdEventListener {
         override fun onAdShown() {
