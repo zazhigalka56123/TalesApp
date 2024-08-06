@@ -56,7 +56,7 @@ dependencies {
     implementation ("com.android.installreferrer:installreferrer:2.2")
 
     implementation ("com.appsflyer:af-android-sdk:6.13.0")
-    implementation ("com.yandex.android:mobileads:7.0.0")
+    implementation ("com.yandex.android:mobileads:7.3.0")
     implementation("androidx.room:room-ktx:2.5.2")
     implementation("androidx.room:room-runtime:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
