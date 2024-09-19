@@ -36,9 +36,12 @@ import kotlinx.coroutines.withContext
 import ru.tales.forfamily.App
 import ru.tales.forfamily.R
 import ru.tales.forfamily.data.remote.ApiRepositoryImpl
+import ru.tales.forfamily.data.remote.PostBackRepositoryImpl
+import ru.tales.forfamily.domain.api.PostBackRepository
 import ru.tales.forfamily.domain.player.PlayerService
 import java.math.BigInteger
 import java.security.MessageDigest
+import kotlin.math.max
 
 
 class MainActivity : AppCompatActivity() {
@@ -64,17 +67,30 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             val count = ApiRepositoryImpl().getSettings()
-            if(count != 20 && count != App.storage.countAdd){
+            if(count != 20 && count != App.storage.countAdd) {
+                Log.d("TAGGGGAA", "count: $count")
                 Log.d("TAGGGGAA", "count: $count")
                 Log.d("TAGGGGAA", "countPopUpShowed: ${App.storage.countPopUpShowed}")
                 Log.d("TAGGGGAA", "countAdd: ${App.storage.countAdd}")
-                App.storage.addShowed -= (App.storage.countPopUpShowed - 1) * App.storage.countAdd
-                App.storage.addShowed = maxOf(App.storage.addShowed, 0)
-                App.storage.countAdd = count
-                App.storage.countPopUpShowed = 1
-                Log.d("TAGGGGAA", "count: $count")
-                Log.d("TAGGGGAA", "countPopUpShowed: ${App.storage.countPopUpShowed}")
-                Log.d("TAGGGGAA", "countAdd: ${App.storage.countAdd}")
+                with(App.storage) {
+                    addShowed -= (countPopUpShowed - 1) * countAdd
+                    addShowed = maxOf(addShowed, 0)
+                    countAdd = count
+                    countPopUpShowed = 1
+
+                    Log.d("TAGGGGAA", "count: $count")
+                    Log.d("TAGGGGAA", "countPopUpShowed: ${App.storage.countPopUpShowed}")
+                    Log.d("TAGGGGAA", "countAdd: ${App.storage.countAdd}")
+
+                    if (isTackingUserId) {
+                        if (trackingTypeUserId == 1) {
+                            addShowedUserId -= (countPostSend - 1) * countAdd
+                            addShowedUserId = maxOf(addShowedUserId, 0)
+                            countAdd = count
+                            countPostSend = 1
+                        }
+                    }
+                }
             }
         }
 
@@ -135,6 +151,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this@MainActivity, "Успешно", Toast.LENGTH_SHORT)
                             .show()
                         btnClose.isClickable = true
+                        App.storage.countPopUpShowed += 1
 //                        dialog.dismiss()
                     } else {
                         Toast.makeText(
@@ -217,9 +234,6 @@ class MainActivity : AppCompatActivity() {
 
 
             dialog.show()
-            if (dialog.isShowing){
-                App.storage.countPopUpShowed += 1
-            }
         }
 
     }
@@ -340,6 +354,9 @@ class MainActivity : AppCompatActivity() {
                     // Called when ad is shown.
                     println( ">>> onAdShown")
                     App.storage.addShowed += 1
+                    if (App.storage.isTackingUserId){
+                        App.storage.addShowedUserId += 1
+                    }
 
                     Log.d("add-counter", App.storage.addShowed.toString())
 
@@ -365,11 +382,38 @@ class MainActivity : AppCompatActivity() {
                     println( ">>> try play")
                     PlayerService.exoPlayer?.play()
                     Log.d("xx1", App.storage.addShowed.toString())
+                    Log.d("xx1_", App.storage.addShowedUserId.toString())
                     Log.d("xx1", App.storage.countPopUpShowed.toString())
+                    Log.d("xx1_", App.storage.countPostSend.toString())
                     Log.d("xx1", App.storage.showPopUp.toString())
+                    Log.d("xx1_", App.storage.isTackingUserId.toString())
+                    Log.d("xx1", App.storage.countAdd.toString())
 
                     if (App.storage.addShowed >= App.storage.countAdd * App.storage.countPopUpShowed && App.storage.showPopUp ){
                         showPopUp()
+                    }
+                    if (App.storage.trackingTypeUserId == 1) {
+                        if (App.storage.addShowedUserId >= App.storage.countAdd * App.storage.countPostSend){
+                            lifecycleScope.launch(Dispatchers.IO){
+                                val success = PostBackRepositoryImpl().postUserId(App.storage.userId)
+                                if (success) {
+                                    App.storage.countPostSend += 1
+                                }
+                                Log.d("TAG", "success $success")
+
+                            }
+                        }
+                    }else{
+                        if (App.storage.addShowedUserId >= App.storage.countAdd && App.storage.countPostSend == 1){
+                            lifecycleScope.launch(Dispatchers.IO){
+                                val success = PostBackRepositoryImpl().postUserId(App.storage.userId)
+                                if (success) {
+                                    App.storage.countPostSend += 1
+                                }
+                                Log.d("TAG", "success $success")
+
+                            }
+                        }
                     }
 
                     destroyInterstitialAd()

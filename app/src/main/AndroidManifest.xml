@@ -12,7 +12,6 @@
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:usesCleartextTraffic="true"
@@ -35,7 +34,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https"
+                    android:pathSuffix="/xKIk"
                     android:host="talesforfamily.onelink.me" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="mainactivity"
+                    android:scheme="talesapp" />
+            </intent-filter>
+            <intent-filter  android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="talesapp.onelink.me" />
             </intent-filter>
         </activity>
         <service

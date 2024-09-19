@@ -7,6 +7,7 @@ import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.appsflyer.deeplink.DeepLinkListener
 import com.appsflyer.deeplink.DeepLinkResult
 import ru.tales.forfamily.domain.SP
+import java.time.temporal.IsoFields
 
 
 class App: Application() {
@@ -55,9 +56,23 @@ class App: Application() {
                 return@DeepLinkListener
             }
             try {
-                var data = deepLinkObj.deepLinkValue
+                val data = deepLinkObj.deepLinkValue
                 if (data == "addCount") {
                     storage.showPopUp = true
+                }
+                if (data == "trackingUserId"){
+                    val userId = deepLinkObj.getStringValue("userId")
+                    val send = deepLinkObj.getStringValue("send")
+                    if (!userId.isNullOrEmpty() && (send.toString() == "1" || send.toString() == "0")){
+                        storage.isTackingUserId = true
+                        storage.trackingTypeUserId = send.toString().toInt()
+                        storage.userId = userId.toString()
+                        Log.d(LOG_TAG, "success ${storage.isTackingUserId} ${storage.trackingTypeUserId} ${storage.userId} end")
+
+                    }
+
+                    Log.d("data", "data $data $userId $send")
+
                 }
 
                 Log.d(LOG_TAG, "The DeepLink data: $data")
