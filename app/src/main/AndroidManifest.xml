@@ -10,6 +10,8 @@
         android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
         android:minSdkVersion="34" />
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -20,6 +22,8 @@
         android:theme="@style/Theme.Tales"
         tools:targetApi="34"
         android:name=".App">
+        <meta-data android:name="applovin.sdk.key"
+            android:value="65057899-a16a-4877-989b-38c432a7fa15"/>
         <activity
             android:name=".presentation.MainActivity"
             android:screenOrientation="fullSensor" 
@@ -67,5 +71,6 @@
         </service>
 
     </application>
+
 
 </manifest>

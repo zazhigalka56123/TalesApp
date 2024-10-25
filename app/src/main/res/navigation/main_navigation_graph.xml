@@ -16,9 +16,9 @@
         <action
             android:id="@+id/action_fragment_main_to_fragment_player"
             app:destination="@id/fragment_player">
-            <argument
-                android:name="tales"
-                app:argType="ru.tales.forfamily.domain.Tale[]"/>
+<!--            <argument-->
+<!--                android:name="tales"-->
+<!--                app:argType="ru.tales.forfamily.domain.Tale[]"/>-->
             <argument
                 android:name="index"
                 app:argType="integer"/>
@@ -32,9 +32,9 @@
         android:id="@+id/fragment_player"
         android:name="ru.tales.forfamily.presentation.fragments.FragmentPlayer"
         tools:layout="@layout/fragment_player">
-        <argument
-            android:name="tales"
-            app:argType="ru.tales.forfamily.domain.Tale[]"/>
+<!--        <argument-->
+<!--            android:name="tales"-->
+<!--            app:argType="ru.tales.forfamily.domain.Tale[]"/>-->
         <argument
             android:name="index"
             app:argType="integer"/>

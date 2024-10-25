@@ -13,8 +13,9 @@ android {
         applicationId = "ru.tales.forfamily"
         minSdk = 26
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.0.4"
+        versionCode = 7
+        versionName = "1.1.0"
+        multiDexEnabled =  true // Enable multidex
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,7 +57,7 @@ dependencies {
     implementation ("com.android.installreferrer:installreferrer:2.2")
 
     implementation ("com.appsflyer:af-android-sdk:6.13.0")
-    implementation ("com.yandex.android:mobileads:7.3.0")
+    implementation ("com.yandex.android:mobileads:7.5.0")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
@@ -70,6 +71,26 @@ dependencies {
     implementation("com.google.android.exoplayer:extension-mediasession:2.19.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // подключение зависимости Yabbi SDK
+    implementation("sspnet.tech:yabbi:1.5.6")
+
+    // пподключение зависимости рекламной сети Applovin SDK
+    implementation ("sspnet.tech.adapters:applovin:1.2.3")
+    implementation ("com.applovin:applovin-sdk:13.0.0")
+
+    // подключение зависимости рекламной сети IronSource SDK
+    implementation ("sspnet.tech.adapters:ironsource:1.3.2")
+    implementation ("com.ironsource.sdk:mediationsdk:7.8.1")
+
+    // подключение зависимости рекламной сети Yandex SDK
+    implementation ("sspnet.tech.adapters:yandex:1.3.2")
+    implementation ("com.huawei.hms:ads-identifier:3.4.62.300")
+
+    //noinspection MobileAdsSdkOutdatedVersion
+    // подключение зависимости рекламной сети Mintegral SDK
+    implementation ("sspnet.tech.adapters:mintegral:1.3.2")
+    implementation ("com.mbridge.msdk.oversea:reward:16.6.31")
+    implementation ("com.mbridge.msdk.oversea:newinterstitial:16.6.31")
     implementation("ru.gildor.coroutines:kotlin-coroutines-retrofit:1.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

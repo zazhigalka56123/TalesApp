@@ -2,7 +2,6 @@ package ru.tales.forfamily.presentation.fragments
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.appsflyer.AppsFlyerLib
@@ -19,21 +17,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.exoplayer2.MediaMetadata
 import com.google.android.exoplayer2.Player
+import ru.tales.forfamily.App
 import ru.tales.forfamily.R
-import ru.tales.forfamily.data.db.TaleRepositoryImpl
 import ru.tales.forfamily.databinding.FragmentPlayerBinding
 import ru.tales.forfamily.domain.Tale
 import ru.tales.forfamily.domain.player.PlayerService
 import ru.tales.forfamily.presentation.MainActivity
 import ru.tales.forfamily.presentation.ViewModel
-import ru.tales.forfamily.presentation.snackBar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import ru.tales.forfamily.App
-import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
+import sspnet.tech.yabbi.Yabbi
 import java.util.Locale
 import kotlin.math.min
 
@@ -175,7 +166,7 @@ class FragmentPlayer : Fragment() {
             println(">>> pause!")
             viewModel.isPlayling.value = true
             binding.buttonPlayer.setBackgroundResource(R.drawable.shape_btn_play)
-            (activity as MainActivity).showAd()
+            (requireActivity() as MainActivity).showAd()
             val title = player?.mediaMetadata?.title
             if (title != null) {
                 val map = mapOf("name" to title)
@@ -347,43 +338,5 @@ class FragmentPlayer : Fragment() {
             )
         }
     }
-
-//    private suspend fun downloadTale(tale: Tale) {
-//        try {
-//            fun download(): String = run {
-//                URL(tale.uri).openStream().use { input ->
-//                    val file = File(context?.filesDir, Uri.parse(tale.uri).lastPathSegment.toString())
-//                    FileOutputStream(file).use { output ->
-//                        input.copyTo(output)
-//                    }
-//                    return file.absolutePath
-//                }
-//            }
-//
-//
-//            withContext(Dispatchers.Main) {
-//                requireContext().snackBar("Начинаем скачивать сказку \"${tale.name}\"")
-//            }
-//            val path = download()
-//            with(viewModel.list.value?.get(tale.index)){
-//                this?.uri = path
-//                this?.isSaved = true
-//            }
-//
-//            TaleRepositoryImpl(requireActivity().application)
-//                .addTale(tale)
-//
-//            withContext(Dispatchers.Main) {
-//                player?.currentMediaItem?.mediaMetadata?.let { updateMeta(it) }
-//                requireContext().snackBar("Сказка \"${tale.name}\" успешно загружена")
-//            }
-//        } catch (exc: Exception) {
-//            exc.printStackTrace()
-//            withContext(Dispatchers.Main) {
-//                requireContext().snackBar("Не удалось загрузить сказку \"${tale.name}\"")
-//            }
-//            return
-//        }
-//    }
 
 }

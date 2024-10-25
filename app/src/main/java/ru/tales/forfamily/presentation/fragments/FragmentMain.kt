@@ -10,6 +10,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import ru.tales.forfamily.App
 import ru.tales.forfamily.databinding.FragmentMainBinding
 import ru.tales.forfamily.domain.Tale
 import ru.tales.forfamily.domain.player.PlayerService
@@ -101,10 +102,10 @@ class FragmentMain: Fragment() {
                 stop = false
             }
 
+            App.tales = array
             findNavController()
                 .navigate(
                     FragmentMainDirections.actionFragmentMainToFragmentPlayer(
-                        array.toTypedArray(),
                         tale.index,
                         stop
                     )

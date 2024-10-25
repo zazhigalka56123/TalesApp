@@ -7,6 +7,7 @@ import com.appsflyer.attribution.AppsFlyerRequestListener
 import com.appsflyer.deeplink.DeepLinkListener
 import com.appsflyer.deeplink.DeepLinkResult
 import ru.tales.forfamily.domain.SP
+import ru.tales.forfamily.domain.Tale
 import java.time.temporal.IsoFields
 
 
@@ -85,6 +86,7 @@ class App: Application() {
     }
 
     companion object {
+        var tales: List<Tale> = emptyList()
         lateinit var storage: SP
     }
 }
