@@ -206,20 +206,24 @@ class FragmentPlayer : Fragment() {
     }
 
     private fun updateMeta(mediaMetadata: MediaMetadata, flag: Boolean = true) {
-        if (!flag){
-            println(">>>pauses")
-            playPause()
+        try {
+            if (!flag) {
+                println(">>>pauses")
+                playPause()
+            }
+            val item = viewModel.list.value?.get(mediaMetadata.extras?.getInt("index") ?: 0)
+            Glide.with(binding.ivCard).load(item?.img).apply(options).into(binding.ivCard)
+            Glide.with(binding.ivTaleText).load(item?.img).apply(options).into(binding.ivTaleText)
+
+            binding.tvNameTalePlayer.text = mediaMetadata.title
+            binding.tvNameTaleText.text = mediaMetadata.title
+
+            binding.tvTextTale.text = item?.text
+
+            item?.let { updateDownloadIcon(it) }
+        }catch (e: Exception) {
+            println("error $e")
         }
-        val item = viewModel.list.value?.get(mediaMetadata.extras?.getInt("index")?: 0)
-        Glide.with(binding.ivCard).load(item?.img).apply(options).into(binding.ivCard)
-        Glide.with(binding.ivTaleText).load(item?.img).apply(options).into(binding.ivTaleText )
-
-        binding.tvNameTalePlayer.text = mediaMetadata.title
-        binding.tvNameTaleText.text = mediaMetadata.title
-
-        binding.tvTextTale.text = item?.text
-
-        item?.let { updateDownloadIcon(it) }
 
     }
 

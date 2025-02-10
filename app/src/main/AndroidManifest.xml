@@ -26,7 +26,7 @@
             android:value="65057899-a16a-4877-989b-38c432a7fa15"/>
         <activity
             android:name=".presentation.MainActivity"
-            android:screenOrientation="fullSensor" 
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
